@@ -2,6 +2,7 @@ package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 
 import database.CRUD;
@@ -21,19 +22,23 @@ public class EspecialidadModel implements CRUD {
 
             PreparedStatement objPrepare = objConnection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
 
+            objPrepare.setString(1,especialidad.getNombre());
+
+            objPrepare.setString(2,especialidad.getDescripcion());
+
+            objPrepare.execute();
+
+
+            ResultSet objResult = objPrepare.getGeneratedKeys();
+
+                while(objResult.next()){
+
+                }
 
 
 
-
-                                            //aqui quedé
-
-
-
-
+                //AQUI QUEDÉ
             
-        } catch (Exception e) {
-            //
-        }
 
         return especialidad;
     }
