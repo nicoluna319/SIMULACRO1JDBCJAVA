@@ -12,7 +12,10 @@ import entity.Especialidad;
 public class EspecialidadModel implements CRUD {
 
     @Override
-    public Especialidad create(Especialidad especialidad) {
+    public Especialidad create(Object object) {
+
+        Especialidad especialidad = (Especialidad) object;
+
 
         Connection objConnection = ConfigDB.openConnection();
 
@@ -33,15 +36,22 @@ public class EspecialidadModel implements CRUD {
 
                 while(objResult.next()){
 
+                    especialidad.setId_especialidad(objResult.getInt(1));
                 }
 
+                objPrepare.close();
 
+            }catch(Exception e){
+                System.out.println("Error al insertar especialidad" + e.getMessage());
+            }
 
-                //AQUI QUEDÉ
-            
+            ConfigDB.closeConnection();
+            return especialidad;
 
-        return especialidad;
-    }
+        }
+    
+   
+
 
     @Override
     public boolean delete(Object object) {
