@@ -16,10 +16,11 @@ public class EspecialidadModel implements CRUD {
     @Override
     public Especialidad create(Object object) {
 
-        Especialidad especialidad = (Especialidad) object;
-
-
+       
+        
         Connection objConnection = ConfigDB.openConnection();
+
+        Especialidad especialidad = (Especialidad) object;
 
         try {
 
@@ -41,7 +42,7 @@ public class EspecialidadModel implements CRUD {
                     especialidad.setId_especialidad(objResult.getInt(1));
                 }
 
-                objPrepare.close();
+                JOptionPane.showMessageDialog(null, "La especialidad fue agregada correctamente");
 
             }catch(Exception e){
                 System.out.println("Error al insertar especialidad" + e.getMessage());
