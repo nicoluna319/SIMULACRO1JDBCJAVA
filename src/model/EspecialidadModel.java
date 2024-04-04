@@ -3,6 +3,7 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -24,7 +25,7 @@ public class EspecialidadModel implements CRUD {
 
         try {
 
-            String sql = "INSERT INTO especialidad(nombre, descripcion) VALUES(?,?);";
+            String sql = "INSERT INTO Especialidad(nombre, descripcion) VALUES(?,?);";
 
             PreparedStatement objPrepare = objConnection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
 
@@ -100,16 +101,25 @@ public class EspecialidadModel implements CRUD {
     @Override
     public List<Object> readAll() {
 
-        List<Especialidad> especialidades = new ArrayList<>();
-
+        List<Object> ListEspecialidades = new ArrayList<>();
         Connection objConnection = ConfigDB.openConnection();
 
         try {
-            
+            String sql = "SELECT * FROM especialidad;";
+        PreparedStatement objprepare = objConnection.prepareStatement(sql);
+            ResultSet objResult = objprepare.executeQuery();
 
-            
-        } catch (Exception e) {
-            // TODO: handle exception
+
+
+
+            /*AQUI QUEDÉ*/
+
+
+
+        } catch (SQLException e) {
+            System.out.println("ERROR > " + e.getMessage);
+
+
         }
 
 

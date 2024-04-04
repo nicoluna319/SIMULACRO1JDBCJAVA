@@ -1,14 +1,18 @@
 import javax.swing.JOptionPane;
 
 import controller.EspecialidadController;
+import database.ConfigDB;
 
 public class Main {
 
     public static void main(String[] args) {
+
+        ConfigDB.openConnection();
+
         int option =0, option2 =0;
 
         do {
-            option = Integer.parseInt(JOptionPane.showMessageDialog("""
+            option = Integer.parseInt(JOptionPane.showInputDialog("""
                     1.Administrar especialidades
                     2.Administrar medicos
                     3.Administrar Pacientes
@@ -20,7 +24,7 @@ public class Main {
             switch(option){
                 case 1:
                 do {
-                    option2 = Integer.parseInt(JOptionPane.showMessageDialog("""
+                    option2 = Integer.parseInt(JOptionPane.showInputDialog("""
                     1.Listar especialidades
                     2.crear una especialidad
                     3.Eliminar una especialidad
@@ -31,6 +35,7 @@ public class Main {
                     """));
 
                     switch(option2){
+                        case 2:
                         EspecialidadController.create();
                         break;
                     }
@@ -38,6 +43,7 @@ public class Main {
                 } while (option2 !=5);
                 break;
             }
-        } while (condition);
+        } while (option !=5);
+
     }
 }
