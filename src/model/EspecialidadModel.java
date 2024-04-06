@@ -3,6 +3,7 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,49 +60,14 @@ public class EspecialidadModel implements CRUD {
 
     @Override
     public boolean delete(Object object) {
-
-        Especialidad especialidad = (Especialidad) object;
-
-        Connection objConnection = ConfigDB.openConnection();
-
-        try {
-           
-            String sql = "DELETE FROM especialidad WHERE id_especialidad =?";
-
-            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
-
-                objPrepare.setInt(1, especialidad.getId_especialidad());
-
-            int filasAfectadas = objPrepare.executeUpdate();
-
-            objPrepare.close();
-
-            if (filasAfectadas > 0) {
-
-                System.out.println("Registro eliminado correctamente");
-                return true;
-            } else {
-                
-                System.out.println("No se encontro ningun ID");
-                return false;
-            }
-
-
-
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,e.getMessage());
-            return false;
-        } finally{
-            ConfigDB.closeConnection();
-        }
-    }
+        return false;
+}
     //obtener todas las especialidades
 
     @Override
     public List<Object> readAll() {
 
-        List<Object> ListEspecialidades = new ArrayList<>();
+       List<Object> ListEspecialidades = new ArrayList<>();
         Connection objConnection = ConfigDB.openConnection();
 
         try {
@@ -109,22 +75,25 @@ public class EspecialidadModel implements CRUD {
         PreparedStatement objprepare = objConnection.prepareStatement(sql);
             ResultSet objResult = objprepare.executeQuery();
 
+            while(objResult.next()){
+                Especialidad objEspecialidad = new Especialidad();
 
+                objEspecialidad.setId_especialidad(objResult.getInt("id_especialidad"));
+                objEspecialidad.setNombre(objResult.getString("nombre"));
+                objEspecialidad.setDescripcion(objResult.getString("descripcion"));
 
-
-            /*AQUI QUEDÉ*/
-
+                ListEspecialidades.add(objEspecialidad);
+            }
 
 
         } catch (SQLException e) {
-            System.out.println("ERROR > " + e.getMessage);
-
-
+            System.out.println("ERROR > " + e.getMessage());
         }
 
+        ConfigDB.closeConnection();
 
 
-        return null;
+        return ListEspecialidades;
     }
 
     @Override

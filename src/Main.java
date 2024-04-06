@@ -35,6 +35,10 @@ public class Main {
                     """));
 
                     switch(option2){
+
+                        case 1:
+                            EspecialidadController.getAll();
+                            break;
                         case 2:
                         EspecialidadController.create();
                         break;
