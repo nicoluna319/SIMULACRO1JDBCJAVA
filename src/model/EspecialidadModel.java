@@ -1,17 +1,16 @@
 package model;
 
+import database.CRUD;
+import database.ConfigDB;
+import entity.Especialidad;
+
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JOptionPane;
-
-import database.CRUD;
-import database.ConfigDB;
-import entity.Especialidad;
 
 public class EspecialidadModel implements CRUD {
 
@@ -58,10 +57,7 @@ public class EspecialidadModel implements CRUD {
    
 
 
-    @Override
-    public boolean delete(Object object) {
-        return false;
-}
+
     //obtener todas las especialidades
 
     @Override
@@ -71,7 +67,7 @@ public class EspecialidadModel implements CRUD {
         Connection objConnection = ConfigDB.openConnection();
 
         try {
-            String sql = "SELECT * FROM especialidad;";
+            String sql = "SELECT * FROM Especialidad;";
         PreparedStatement objprepare = objConnection.prepareStatement(sql);
             ResultSet objResult = objprepare.executeQuery();
 
@@ -97,15 +93,73 @@ public class EspecialidadModel implements CRUD {
     }
 
     @Override
-    public Object readById(int id) {
+    public boolean delete(Object object) {
 
-        return null;
+        Connection objConnection = ConfigDB.openConnection();
+
+        Especialidad objEspecialidad = (Especialidad) object;
+
+        boolean isDeleted = false;
+
+        try {
+            String sql = "DELETE FROM Especialidad WHERE id_especialidad = ?;";
+            PreparedStatement objprepare = objConnection.prepareStatement(sql);
+
+            objprepare.setInt(1,objEspecialidad.getId_especialidad());
+
+            int totalAfectadas = objprepare.executeUpdate();
+
+            if (totalAfectadas > 0){
+                isDeleted = true;
+                JOptionPane.showMessageDialog(null,"Registro eliminado correctamente");
+            }
+        }catch (SQLException e) {
+
+            System.out.println("ERROR > " + e.getMessage());
+        }
+
+        ConfigDB.closeConnection();
+
+        return isDeleted;
     }
+
 
     @Override
     public boolean update(Object object) {
 
-        return false;
+        Connection objConnection = ConfigDB.openConnection();
+        Especialidad especialidad = (Especialidad) object;
+
+        boolean isUpdated = false;
+
+        try {
+            String sql = "UPDATE Especialidad SET nombre = ?, descripcion = ?;";
+            PreparedStatement objPrepare = objConnection.prepareStatement(sql);
+
+            objPrepare.setString(1,especialidad.getNombre());
+
+            objPrepare.setString(2,especialidad.getDescripcion());
+
+            int totalAfectadas = objPrepare.executeUpdate();
+            if (totalAfectadas > 0){
+                isUpdated = true;
+                JOptionPane.showMessageDialog(null,"El registro fue actualizado correctamente");
+
+            }
+
+
+
+        }catch (SQLException e){
+            System.out.println("ERROR" + e.getMessage());
+        }
+        ConfigDB.closeConnection();
+        return isUpdated;
+    }
+
+    @Override
+    public Object readById(int id) {
+
+        return null;
     }
     
 

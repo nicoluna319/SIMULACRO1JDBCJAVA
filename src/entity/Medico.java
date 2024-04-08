@@ -6,13 +6,26 @@ public class Medico {
     private String nombre;
     private String apellidos;
     private int id_especialidad;
-    
-    public Medico(int id_medico, String nombre, String apellidos, int id_especialidad) {
+
+    private Especialidad especialidad;
+
+
+    public Medico() {
+
+    }
+
+    public Medico(int id_medico, String nombre, String apellidos, int id_especialidad, Especialidad especialidad) {
         this.id_medico = id_medico;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.id_especialidad = id_especialidad;
+        this.especialidad = especialidad;
     }
+
+    public Medico(String nombre, String apellidos, int idEspecialidad, Especialidad objEspecialidad) {
+
+    }
+
 
     public int getId_medico() {
         return id_medico;
@@ -46,10 +59,18 @@ public class Medico {
         this.id_especialidad = id_especialidad;
     }
 
+    public Especialidad getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(Especialidad especialidad) {
+        this.especialidad = especialidad;
+    }
+
     @Override
     public String toString() {
         return "Medico [id_medico=" + id_medico + ", nombre=" + nombre + ", apellidos=" + apellidos
-                + ", id_especialidad=" + id_especialidad + "]";
+                + ", id_especialidad=" + id_especialidad + "Especialidad" + this.especialidad.getNombre() + "]";
     }
     
     

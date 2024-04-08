@@ -4,6 +4,7 @@ import javax.swing.JOptionPane;
 
 import entity.Especialidad;
 import model.EspecialidadModel;
+import utils.Utils;
 
 import java.awt.*;
 import java.util.List;
@@ -38,4 +39,40 @@ public class EspecialidadController {
     public static EspecialidadModel instanceModel(){
         return new EspecialidadModel();
     }
+
+    public static void delete(){
+        Object[] options = Utils.listToArray(instanceModel().readAll());
+        Especialidad objSelected = (Especialidad) JOptionPane.showInputDialog(
+                null,
+                "Selecciona una especialidad",
+                "",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]
+        );
+
+        instanceModel().delete(objSelected);
+    }
+
+    public static void  update(){
+        Object[] options = Utils.listToArray(instanceModel().readAll());
+
+        Especialidad objSelected = (Especialidad) JOptionPane.showInputDialog(
+                null,
+                "Selecciona una especialidad para actualizar",
+                "",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]
+        );
+
+        objSelected.setNombre(JOptionPane.showInputDialog(null,"Ingresa el nuevo nombre:",objSelected.getNombre()));
+        objSelected.setDescripcion(JOptionPane.showInputDialog(null,"Ingresa el nuevo nombre:",objSelected.getDescripcion()));
+
+        instanceModel().update(objSelected);
+
+    }
 }
+
